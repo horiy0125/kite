@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { pageRoutes } from '../../config/pageRoutes';
+import { BaseProps } from '../../types';
 
 const rootStyle = css`
   display: flex;
@@ -13,7 +14,6 @@ const rootStyle = css`
 const logoLinkStyle = css`
   display: flex;
   align-items: center;
-  justify-content: center;
 
   padding: 0 4px;
 
@@ -31,9 +31,9 @@ const linkTextStyle = css`
   color: #121212;
 `;
 
-export const KiteHeader: React.FC = () => {
+export const KiteHeader: React.FC<BaseProps> = props => {
   return (
-    <header css={rootStyle}>
+    <header css={rootStyle} className={props.className}>
       <Link css={logoLinkStyle} to={pageRoutes.index}>
         <img src="/images/vite.svg" alt="" css={logoStyle} />
         <span css={linkTextStyle}>Kite</span>
