@@ -2,7 +2,7 @@ import type { User } from 'firebase/auth';
 import { atom } from 'recoil';
 import { recoilKeys } from '..';
 
-export const firebaseUserState = atom<User | undefined>({
+export const firebaseUserState = atom<User | undefined | null>({
   key: recoilKeys.atoms.FIREBASE_USER,
   default: undefined,
 });

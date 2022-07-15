@@ -4,17 +4,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { pageRoutes } from '../../../config/pageRoutes';
 import { useAccessControl } from '../../../hooks/accessControl';
 import { BasePropsWithChildren } from '../../../types';
-import { KiteHeader } from '../../organisms/KiteHeader';
+import { KiteHeaderNavBar } from '../../organisms/KiteHeaderNavBar';
 
 const headerStyle = css`
   position: fixed;
   top: 0;
   left: 0;
+
+  width: 100%;
 `;
 
 const containerStyle = css`
-  width: 100%;
-
   padding-top: 96px;
 `;
 
@@ -41,7 +41,7 @@ export const KiteBaseTemplate: React.FC<BasePropsWithChildren> = props => {
 
   return (
     <>
-      <KiteHeader css={headerStyle} />
+      <KiteHeaderNavBar css={headerStyle} />
 
       <main css={containerStyle} className="container">
         {props.children}

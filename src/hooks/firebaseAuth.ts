@@ -1,4 +1,9 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { firebaseApp } from '../config/firebase';
@@ -24,14 +29,17 @@ export const useFirebaseAuth = () => {
 
         if (credential) {
           const token = credential.accessToken;
-          const user = result.user;
-
           setFirebaseUserAccessToken(token);
-          setFirebaseUser(user);
+
+          onAuthStateChanged(auth, user => {
+            console.log(user);
+            setFirebaseUser(user);
+          });
         }
       })
       .catch(error => {
         console.error(error);
+
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -41,7 +49,7 @@ export const useFirebaseAuth = () => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
-  }, []);
+  }, [setFirebaseUser, setFirebaseUserAccessToken]);
 
   return {
     signIn,
