@@ -11,10 +11,10 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
   },
   "dependencies": {
-    "@picocss/pico": "^1.5.3",
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0",
     "recoil": "^0.7.4"
   },
   "devDependencies": {
