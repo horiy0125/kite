@@ -32,7 +32,6 @@ export const useFirebaseAuth = () => {
           setFirebaseUserAccessToken(token);
 
           onAuthStateChanged(auth, user => {
-            console.log(user);
             setFirebaseUser(user);
           });
         }
