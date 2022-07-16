@@ -43,9 +43,9 @@ export const KiteIndexTemplate: React.FC = () => {
             </header>
 
             <KiteIndexMenuItem
-              title={`マークダウン${isAdminUser ? '（メモ）' : null}`}
+              title="マークダウン"
               subTitle="マークダウン形式でメモを記録・管理する"
-              linkLabel={`マークダウン${isAdminUser ? '（メモ）' : null}管理`}
+              linkLabel="マークダウン管理"
               linkTo={pageRoutes.markdowns.index}
             />
 
