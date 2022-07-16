@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { useAccessControl } from '../../../hooks/accessControl';
-import { useFirebaseAuth } from '../../../hooks/firebaseAuth';
+import { useAuth } from '../../../hooks/auth';
+import { KiteBaseIcon } from '../../atoms/base/KiteBaseIcon';
+import { KiteAccountCircleIcon } from '../../atoms/icons/KiteAccountCircleIcon';
 import { KiteBaseTemplate } from '../base/KiteBaseTemplate';
 
 const headerStyle = css`
@@ -9,15 +11,14 @@ const headerStyle = css`
   justify-content: space-between;
 `;
 
-const userIconStyle = css`
+const accountCircleIconStyle = css`
   width: 128px;
   height: 128px;
-  border-radius: 50%;
 `;
 
 export const KiteAccountIndexTemplate: React.FC = () => {
-  const firebaseAuth = useFirebaseAuth();
-  const { user } = firebaseAuth;
+  const auth = useAuth();
+  const { currentUser } = auth;
 
   const accessControl = useAccessControl();
   const { isAdminUser } = accessControl;
@@ -27,51 +28,39 @@ export const KiteAccountIndexTemplate: React.FC = () => {
       <section>
         <h1>アカウント情報</h1>
 
-        {user ? (
+        {currentUser ? (
           <article>
             <header css={headerStyle}>
               <hgroup>
-                <h2>{user.displayName}</h2>
-                <h3>
-                  Googleアカウントでログイン
-                  {isAdminUser ? '（管理者）' : null}
-                </h3>
+                <h2>{currentUser.name ? currentUser.name : currentUser.uid}</h2>
+                <h3>{isAdminUser ? '管理者' : 'ユーザー'}</h3>
               </hgroup>
 
-              {user.photoURL ? (
-                <img
-                  src={user.photoURL}
-                  alt="プロフィール画像"
-                  css={userIconStyle}
-                />
-              ) : null}
+              <KiteBaseIcon
+                css={accountCircleIconStyle}
+                icon={<KiteAccountCircleIcon />}
+              />
             </header>
 
             <div className="grid">
+              <div>名前</div>
+              <div>{currentUser.name ? currentUser.name : '未設定'}</div>
+            </div>
+
+            <br />
+
+            <div className="grid">
+              <div>ニックネーム</div>
+              <div>
+                {currentUser.nickname ? currentUser.nickname : '未設定'}
+              </div>
+            </div>
+
+            <br />
+
+            <div className="grid">
               <div>メールアドレス</div>
-              <div>{user.email ? user.email : '非表示になっています'}</div>
-            </div>
-
-            <br />
-
-            <div className="grid">
-              <div>登録日時</div>
-              <div>
-                {user.metadata.creationTime
-                  ? user.metadata.creationTime
-                  : '非表示になっています'}
-              </div>
-            </div>
-
-            <br />
-
-            <div className="grid">
-              <div>最終ログイン</div>
-              <div>
-                {user.metadata.creationTime
-                  ? user.metadata.creationTime
-                  : '非表示になっています'}
-              </div>
+              <div>{currentUser.email}</div>
             </div>
 
             <footer>

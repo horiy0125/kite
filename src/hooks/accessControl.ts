@@ -1,22 +1,22 @@
 import { useMemo } from 'react';
 import { envVariables } from '../config/envVariables';
-import { useFirebaseAuth } from './firebaseAuth';
+import { useAuth } from './auth';
 
 export const useAccessControl = () => {
-  const firebaseAuth = useFirebaseAuth();
-  const { user } = firebaseAuth;
+  const auth = useAuth();
+  const { currentUser } = auth;
 
   const isUserSignedIn = useMemo(() => {
-    return user !== undefined;
-  }, [user]);
+    return currentUser !== null;
+  }, [currentUser]);
 
   const isAdminUser = useMemo(() => {
-    if (user) {
-      return user.email === envVariables.ADMIN_USER_EMAIL;
+    if (currentUser) {
+      return currentUser.email === envVariables.ADMIN_USER_EMAIL;
     }
 
     return false;
-  }, [user]);
+  }, [currentUser]);
 
   return {
     isUserSignedIn,

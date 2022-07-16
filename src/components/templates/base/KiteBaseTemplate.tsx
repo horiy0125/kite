@@ -15,7 +15,7 @@ const headerStyle = css`
 `;
 
 const containerStyle = css`
-  padding-top: 96px;
+  padding-top: 160px;
 `;
 
 export const KiteBaseTemplate: React.FC<BasePropsWithChildren> = props => {

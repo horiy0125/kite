@@ -1,8 +1,10 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { pageRoutes } from '../../config/pageRoutes';
-import { useFirebaseAuth } from '../../hooks/firebaseAuth';
+import { useAuth } from '../../hooks/auth';
 import { BaseProps } from '../../types';
+import { KiteBaseIcon } from '../atoms/base/KiteBaseIcon';
+import { KiteAccountCircleIcon } from '../atoms/icons/KiteAccountCircleIcon';
 
 const rootStyle = css`
   padding: 16px 24px;
@@ -48,8 +50,8 @@ const userDisplayNameStyle = css`
 `;
 
 export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
-  const firebaseAuth = useFirebaseAuth();
-  const { user } = firebaseAuth;
+  const auth = useAuth();
+  const { currentUser } = auth;
 
   return (
     <header css={rootStyle} className={props.className}>
@@ -63,18 +65,11 @@ export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
           </li>
         </ul>
 
-        {user ? (
+        {currentUser ? (
           <ul>
             <li>
               <Link css={userLinkStyle} to={pageRoutes.account.index}>
-                {user.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt="プロフィール画像"
-                    css={userIconStyle}
-                  />
-                ) : null}
-                <strong css={userDisplayNameStyle}>{user.displayName}</strong>
+                <KiteBaseIcon icon={<KiteAccountCircleIcon />} />
               </Link>
             </li>
           </ul>

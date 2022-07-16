@@ -1,14 +1,58 @@
-import { useFirebaseAuth } from '../../hooks/firebaseAuth';
+import { useCallback, useState } from 'react';
+import { useAuth } from '../../hooks/auth';
 import { KiteBaseTemplate } from './base/KiteBaseTemplate';
 
 export const KiteSigninTemplate: React.FC = () => {
-  const firebaseAuth = useFirebaseAuth();
-  const { signIn } = firebaseAuth;
+  const auth = useAuth();
+  const { signIn } = auth;
+
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onClickSignIn = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+
+      setIsLoggingIn(true);
+      await signIn(email, password)
+        .then(() => {
+          setIsLoggingIn(false);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    [email, password],
+  );
 
   return (
     <KiteBaseTemplate>
       <section>
-        <button onClick={signIn}>サインイン</button>
+        <h1>サインイン</h1>
+
+        <form>
+          <label>
+            メールアドレス
+            <input type="email" onChange={e => setEmail(e.target.value)} />
+          </label>
+          <label>
+            パスワード
+            <input
+              type="password"
+              onChange={e => setPassword(e.target.value)}
+            />
+          </label>
+
+          <button
+            type="submit"
+            onClick={e => onClickSignIn(e)}
+            aria-busy={isLoggingIn}
+          >
+            サインイン
+          </button>
+        </form>
       </section>
     </KiteBaseTemplate>
   );
