@@ -24,8 +24,6 @@ const logoStyle = css`
 const linkTextStyle = css`
   font-size: 28px;
   font-weight: 700;
-
-  color: #121212;
 `;
 
 const userLinkStyle = css`
@@ -33,20 +31,6 @@ const userLinkStyle = css`
   align-items: center;
 
   text-decoration: none;
-`;
-
-const userIconStyle = css`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-`;
-
-const userDisplayNameStyle = css`
-  font-size: 16px;
-
-  margin-left: 12px;
-
-  color: #121212;
 `;
 
 export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
@@ -58,7 +42,11 @@ export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
       <nav>
         <ul>
           <li>
-            <Link css={logoLinkStyle} to={pageRoutes.index}>
+            <Link
+              className="contrast"
+              css={logoLinkStyle}
+              to={pageRoutes.index}
+            >
               <img src="/images/vite.svg" alt="ロゴ" css={logoStyle} />
               <span css={linkTextStyle}>Kite</span>
             </Link>
@@ -68,7 +56,11 @@ export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
         {currentUser ? (
           <ul>
             <li>
-              <Link css={userLinkStyle} to={pageRoutes.account.index}>
+              <Link
+                css={userLinkStyle}
+                to={pageRoutes.account.index}
+                className="secondary"
+              >
                 <KiteBaseIcon icon={<KiteAccountCircleIcon />} />
               </Link>
             </li>

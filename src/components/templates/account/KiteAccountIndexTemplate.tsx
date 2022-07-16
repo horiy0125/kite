@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useAccessControl } from '../../../hooks/accessControl';
 import { useAuth } from '../../../hooks/auth';
+import { mqExtraSmall } from '../../../styles/mixins';
 import { KiteBaseIcon } from '../../atoms/base/KiteBaseIcon';
 import { KiteAccountCircleIcon } from '../../atoms/icons/KiteAccountCircleIcon';
 import { KiteBaseTemplate } from '../base/KiteBaseTemplate';
@@ -12,6 +13,10 @@ const headerStyle = css`
 `;
 
 const accountCircleIconStyle = css`
+  ${mqExtraSmall(`
+    display: none
+  `)}
+
   width: 128px;
   height: 128px;
 `;
