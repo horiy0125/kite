@@ -92,18 +92,27 @@ export const KiteAccountIndexTemplate: React.FC = () => {
                 <div>パスワード</div>
                 <div>
                   <Link to={pageRoutes.account.changePassword}>
-                    パスワードの変更
+                    パスワードを変更する
                   </Link>
                 </div>
               </div>
+
+              <br />
+
+              <hr />
+
+              <div className="grid">
+                <Link
+                  to={pageRoutes.account.edit}
+                  role="button"
+                  className="outline"
+                >
+                  プロフィールを変更する
+                </Link>
+              </div>
             </article>
 
-            <details>
-              <summary>登録情報の変更</summary>
-
-              <button onClick={() => {}}>プロフィールを変更する</button>
-              <button onClick={() => {}}>パスワードを変更する</button>
-            </details>
+            <hr />
 
             <button onClick={() => {}} className="secondary">
               サインアウト

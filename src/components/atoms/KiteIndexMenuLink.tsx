@@ -13,7 +13,7 @@ const rootStyle = css`
 export const KiteIndexMenuLink: React.FC<Props> = props => {
   return (
     <p css={rootStyle} className={props.className}>
-      <Link to={props.to} role="button">
+      <Link to={props.to} role="button" className="outline">
         {props.children}
       </Link>
     </p>
