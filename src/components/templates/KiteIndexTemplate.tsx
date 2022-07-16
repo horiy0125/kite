@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import { pageRoutes } from '../../config/pageRoutes';
 import { useAccessControl } from '../../hooks/accessControl';
+import { KiteIndexMenuItem } from '../molecules/KiteIndexMenuItem';
 import { KiteBaseTemplate } from './base/KiteBaseTemplate';
 
 export const KiteIndexTemplate: React.FC = () => {
@@ -15,94 +15,101 @@ export const KiteIndexTemplate: React.FC = () => {
         {isAdminUser ? (
           <article>
             <header>
-              <hgroup>
-                <h2>公開コンテンツ管理</h2>
-                <h3>ポートフォリオサイトで公開するコンテンツを管理する</h3>
-              </hgroup>
+              <h2>公開コンテンツ管理</h2>
             </header>
 
-            <div className="grid">
-              <Link to={pageRoutes.bookmarks.index} role="button">
-                ブックマーク管理
-              </Link>
-              <Link to={pageRoutes.markdownPosts.index} role="button">
-                マークダウン記事管理
-              </Link>
-            </div>
+            <KiteIndexMenuItem
+              title="ブックマーク"
+              subTitle="技術記事などをブックマークとして記録・公開する"
+              linkLabel="ブックマーク管理"
+              linkTo={pageRoutes.bookmarks.index}
+            />
+
+            <hr />
+
+            <KiteIndexMenuItem
+              title="マークダウン記事"
+              subTitle="マークダウン記事（画像なし）を執筆・公開する"
+              linkLabel="マークダウン記事管理"
+              linkTo={pageRoutes.markdownPosts.index}
+            />
           </article>
         ) : null}
 
         {isAdminUser || isAllowedUser ? (
           <article>
             <header>
-              <hgroup>
-                <h2>{isAdminUser ? 'プライベート' : null}コンテンツ管理</h2>
-                <h3>メモやブックマークなどを管理する</h3>
-              </hgroup>
+              <h2>{isAdminUser ? 'プライベート' : null}コンテンツ管理</h2>
             </header>
 
-            <div className="grid">
-              <Link to={pageRoutes.markdowns.index} role="button">
-                マークダウン管理
-              </Link>
+            <KiteIndexMenuItem
+              title={`マークダウン${isAdminUser ? '（メモ）' : null}`}
+              subTitle="マークダウン形式でメモを記録・管理する"
+              linkLabel={`マークダウン${isAdminUser ? '（メモ）' : null}管理`}
+              linkTo={pageRoutes.markdowns.index}
+            />
 
-              <Link to={pageRoutes.codeSnippets.index} role="button">
-                コードスニペット管理
-              </Link>
-            </div>
+            <hr />
+
+            <KiteIndexMenuItem
+              title="コードスニペット"
+              subTitle="スクリプトを保存・dry runする"
+              linkLabel="コードスニペット管理"
+              linkTo={pageRoutes.codeSnippets.index}
+            />
           </article>
         ) : null}
 
         {isAdminUser || isAllowedUser ? (
           <article>
             <header>
-              <hgroup>
-                <h2>収支管理</h2>
-                <h3>毎月の収入・支出を記録する</h3>
-              </hgroup>
+              <h2>収支管理</h2>
             </header>
 
-            <div className="grid">
-              <Link to={pageRoutes.balance.new} role="button">
-                収入・支出を入力する
-              </Link>
-              <Link to={pageRoutes.balance.index} role="button">
-                家計簿を見る
-              </Link>
-            </div>
+            <KiteIndexMenuItem
+              title="入力"
+              subTitle="収支、月初・月末口座残高を記録する"
+              linkLabel="入力画面へ"
+              linkTo={pageRoutes.balance.new}
+            />
+
+            <hr />
+
+            <KiteIndexMenuItem
+              title="家計簿"
+              subTitle="各月の収支状況を閲覧・比較する"
+              linkLabel="家計簿へ"
+              linkTo={pageRoutes.balance.index}
+            />
           </article>
         ) : null}
 
         {isAdminUser ? (
           <article>
             <header>
-              <hgroup>
-                <h2>システム管理</h2>
-                <h3>登録されたアカウントなどを管理する</h3>
-              </hgroup>
+              <h2>システム管理</h2>
             </header>
 
-            <div className="grid">
-              <Link to={pageRoutes.accounts.index} role="button">
-                アカウント管理
-              </Link>
-            </div>
+            <KiteIndexMenuItem
+              title="アカウント"
+              subTitle="登録済みのアカウントを閲覧・管理する"
+              linkLabel="アカウント管理"
+              linkTo={pageRoutes.accounts.index}
+            />
           </article>
         ) : null}
 
         <article>
           <header>
-            <hgroup>
-              <h2>クローゼット</h2>
-              <h3>ファッションアイテムを管理する</h3>
-            </hgroup>
+            <h2>クローゼット</h2>
           </header>
 
-          <div className="grid">
-            <Link to={pageRoutes.closet.index} role="button">
-              クローゼットを見る
-            </Link>
-          </div>
+          <KiteIndexMenuItem
+            title="アイテム一覧"
+            subTitle="持っているアイテムを閲覧・管理する"
+            linkLabel="クローゼットへ"
+            linkTo={pageRoutes.closet.index}
+          />
         </article>
       </section>
     </KiteBaseTemplate>
