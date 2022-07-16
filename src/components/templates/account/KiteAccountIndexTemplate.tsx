@@ -99,8 +99,6 @@ export const KiteAccountIndexTemplate: React.FC = () => {
 
               <br />
 
-              <hr />
-
               <div className="grid">
                 <Link
                   to={pageRoutes.account.edit}
@@ -111,8 +109,6 @@ export const KiteAccountIndexTemplate: React.FC = () => {
                 </Link>
               </div>
             </article>
-
-            <hr />
 
             <button onClick={() => {}} className="secondary">
               サインアウト

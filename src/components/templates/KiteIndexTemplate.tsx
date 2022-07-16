@@ -53,7 +53,7 @@ export const KiteIndexTemplate: React.FC = () => {
 
             <KiteIndexMenuItem
               title="コードスニペット"
-              subTitle="スクリプトを保存・dry runする"
+              subTitle="スクリプトを保存・実行する"
               linkLabel="コードスニペット管理"
               linkTo={pageRoutes.codeSnippets.index}
             />
