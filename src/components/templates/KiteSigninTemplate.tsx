@@ -17,11 +17,12 @@ export const KiteSigninTemplate: React.FC = () => {
 
       setIsLoggingIn(true);
       await signIn(email, password)
-        .then(() => {
-          setIsLoggingIn(false);
-        })
+        .then(() => {})
         .catch(error => {
           console.error(error);
+        })
+        .finally(() => {
+          setIsLoggingIn(false);
         });
     },
     [email, password],

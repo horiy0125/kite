@@ -84,6 +84,32 @@ export const KiteIndexTemplate: React.FC = () => {
           </article>
         ) : null}
 
+        <article>
+          <header>
+            <h2>クローゼット</h2>
+          </header>
+
+          <KiteIndexMenuItem
+            title="アイテム一覧"
+            subTitle="持っているアイテムを閲覧・管理する"
+            linkLabel="クローゼットへ"
+            linkTo={pageRoutes.closet.index}
+          />
+        </article>
+
+        <article>
+          <header>
+            <h2>アカウント管理</h2>
+          </header>
+
+          <KiteIndexMenuItem
+            title="プロフィール"
+            subTitle="登録した情報を閲覧・変更する"
+            linkLabel="プロフィール画面へ"
+            linkTo={pageRoutes.account.index}
+          />
+        </article>
+
         {isAdminUser ? (
           <article>
             <header>
@@ -98,19 +124,6 @@ export const KiteIndexTemplate: React.FC = () => {
             />
           </article>
         ) : null}
-
-        <article>
-          <header>
-            <h2>クローゼット</h2>
-          </header>
-
-          <KiteIndexMenuItem
-            title="アイテム一覧"
-            subTitle="持っているアイテムを閲覧・管理する"
-            linkLabel="クローゼットへ"
-            linkTo={pageRoutes.closet.index}
-          />
-        </article>
       </section>
     </KiteBaseTemplate>
   );

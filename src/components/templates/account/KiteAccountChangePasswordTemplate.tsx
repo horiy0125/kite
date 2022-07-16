@@ -10,13 +10,19 @@ export const KiteAccountChangePasswordTemplate: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
 
+  const [isPasswordChanging, setIsPasswordChanging] = useState(false);
+
   const onClickChangePassword = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
 
+      setIsPasswordChanging(true);
       changePassword(currentPassword, newPassword, newPasswordConfirmation)
         .then(() => {})
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
+        .finally(() => {
+          setIsPasswordChanging(false);
+        });
     },
     [currentPassword, newPassword, newPasswordConfirmation],
   );
@@ -54,7 +60,11 @@ export const KiteAccountChangePasswordTemplate: React.FC = () => {
             />
           </label>
 
-          <button type="submit" onClick={e => onClickChangePassword(e)}>
+          <button
+            type="submit"
+            onClick={e => onClickChangePassword(e)}
+            aria-busy={isPasswordChanging}
+          >
             パスワードを変更する
           </button>
         </form>

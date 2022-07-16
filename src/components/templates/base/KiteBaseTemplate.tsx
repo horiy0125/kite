@@ -6,18 +6,6 @@ import { useAccessControl } from '../../../hooks/accessControl';
 import { BasePropsWithChildren } from '../../../types';
 import { KiteHeaderNavBar } from '../../organisms/KiteHeaderNavBar';
 
-const headerStyle = css`
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-`;
-
-const containerStyle = css`
-  padding-top: 160px;
-`;
-
 export const KiteBaseTemplate: React.FC<BasePropsWithChildren> = props => {
   const navigate = useNavigate();
 
@@ -41,11 +29,8 @@ export const KiteBaseTemplate: React.FC<BasePropsWithChildren> = props => {
 
   return (
     <>
-      <KiteHeaderNavBar css={headerStyle} />
-
-      <main css={containerStyle} className="container">
-        {props.children}
-      </main>
+      <KiteHeaderNavBar />
+      <main className="container">{props.children}</main>
     </>
   );
 };

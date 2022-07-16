@@ -46,7 +46,7 @@ export const KiteAccountIndexTemplate: React.FC = () => {
   return (
     <KiteBaseTemplate>
       <section>
-        <h1>アカウント情報</h1>
+        <h1>プロフィール</h1>
 
         {currentUser ? (
           <>

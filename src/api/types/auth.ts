@@ -26,3 +26,20 @@ export type ChangePasswordApiRequest = {
   password: string;
   password_confirmation: string;
 };
+
+export type ChangePasswordApiResponse = {
+  data: {
+    id: number;
+    uid: string;
+    provider: string;
+    email: string;
+    name: null;
+    nickname: null;
+    image: null;
+    allow_password_change: boolean;
+    created_at: string;
+    updated_at: string;
+  };
+  message: string;
+  success: boolean;
+};

@@ -1,10 +1,7 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { pageRoutes } from '../../config/pageRoutes';
-import { useAuth } from '../../hooks/auth';
 import { BaseProps } from '../../types';
-import { KiteBaseIcon } from '../atoms/base/KiteBaseIcon';
-import { KiteAccountCircleIcon } from '../atoms/icons/KiteAccountCircleIcon';
 
 const rootStyle = css`
   padding: 16px 24px;
@@ -26,17 +23,7 @@ const linkTextStyle = css`
   font-weight: 700;
 `;
 
-const userLinkStyle = css`
-  display: flex;
-  align-items: center;
-
-  text-decoration: none;
-`;
-
 export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
-  const auth = useAuth();
-  const { currentUser } = auth;
-
   return (
     <header css={rootStyle} className={props.className}>
       <nav>
@@ -52,20 +39,6 @@ export const KiteHeaderNavBar: React.FC<BaseProps> = props => {
             </Link>
           </li>
         </ul>
-
-        {currentUser ? (
-          <ul>
-            <li>
-              <Link
-                css={userLinkStyle}
-                to={pageRoutes.account.index}
-                className="secondary"
-              >
-                <KiteBaseIcon icon={<KiteAccountCircleIcon />} />
-              </Link>
-            </li>
-          </ul>
-        ) : null}
       </nav>
     </header>
   );

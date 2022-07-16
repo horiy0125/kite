@@ -3,6 +3,7 @@ import { apiRoutes } from '../../config/apiRoutes';
 import {
   AuthRequestHeaders,
   ChangePasswordApiRequest,
+  ChangePasswordApiResponse,
   SignInApiRequest,
   SignInApiResponse,
 } from '../types/auth';
@@ -31,7 +32,7 @@ export const changePasswordApiClient = async (
     password_confirmation: passwordConfirmation,
   };
 
-  const res = await baseApiInstance.put(
+  const res = await baseApiInstance.put<ChangePasswordApiResponse>(
     apiRoutes.v1.auth.changePassword,
     data,
     {

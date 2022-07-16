@@ -4,7 +4,12 @@ import { changePasswordApiClient, signInApiClient } from '../api/clients/auth';
 import { AuthRequestHeaders } from '../api/types/auth';
 import { currentUserState } from '../recoil/atoms/auth';
 import { CurrentUser } from '../types/auth';
-import { CurrentPasswordWrongError } from '../types/error';
+import {
+  CurrentPasswordWrongError,
+  CurrentUserNullError,
+  PasswordConfirmationWrongError,
+  TooShortPasswordError,
+} from '../types/error';
 
 export const useAuth = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
@@ -47,6 +52,18 @@ export const useAuth = () => {
       newPasswordConfirmation: string,
     ) => {
       if (currentUser) {
+        if (newPassword !== newPasswordConfirmation) {
+          throw new PasswordConfirmationWrongError(
+            '新しいパスワードが一致しません',
+          );
+        }
+
+        if (newPassword.length < 6) {
+          throw new TooShortPasswordError(
+            '6文字以上のパスワードを入力してください',
+          );
+        }
+
         await signInApiClient(currentUser.email, currentPassword)
           .then(async res => {
             const headers = res.headers;
@@ -61,14 +78,17 @@ export const useAuth = () => {
               requestHeaders,
               newPassword,
               newPasswordConfirmation,
-            ).then(console.log);
+            ).catch(error => {
+              console.error(error);
+            });
           })
-          .catch(error => {
-            console.error(error);
+          .catch(() => {
             throw new CurrentPasswordWrongError(
               '現在のパスワードが間違っています',
             );
           });
+      } else {
+        throw new CurrentUserNullError();
       }
     },
     [currentUser],
