@@ -30,7 +30,7 @@ export const KiteSigninTemplate: React.FC = () => {
   return (
     <KiteBaseTemplate>
       <section>
-        <h1>サインイン</h1>
+        <h1>Kite にサインイン</h1>
 
         <form>
           <label>
