@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { pageRoutes } from '../../../config/pageRoutes';
 import { useAccessControl } from '../../../hooks/accessControl';
@@ -28,7 +29,19 @@ export const KiteAccountIndexTemplate: React.FC = () => {
   const { currentUser } = auth;
 
   const accessControl = useAccessControl();
-  const { isAdminUser } = accessControl;
+  const { isAdminUser, isAllowedUser } = accessControl;
+
+  const accountType = useMemo(() => {
+    if (isAdminUser) {
+      return '管理者アカウント';
+    }
+
+    if (isAllowedUser) {
+      return '標準アカウント';
+    }
+
+    return 'ゲストアカウント';
+  }, [isAdminUser, isAllowedUser]);
 
   return (
     <KiteBaseTemplate>
@@ -43,7 +56,7 @@ export const KiteAccountIndexTemplate: React.FC = () => {
                   <h2>
                     {currentUser.name ? currentUser.name : currentUser.uid}
                   </h2>
-                  <h3>{isAdminUser ? '管理者' : 'ユーザー'}</h3>
+                  <h3>{accountType}</h3>
                 </hgroup>
 
                 <KiteBaseIcon

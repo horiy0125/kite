@@ -18,8 +18,15 @@ export const useAccessControl = () => {
     return false;
   }, [currentUser]);
 
+  const isAllowedUser = useMemo(() => {
+    if (currentUser) {
+      return currentUser.email === envVariables.ALLOWED_USER_EMAIL;
+    }
+  }, [currentUser]);
+
   return {
     isUserSignedIn,
     isAdminUser,
+    isAllowedUser,
   };
 };

@@ -4,4 +4,5 @@ export const envVariables = {
 
   API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
   ADMIN_USER_EMAIL: import.meta.env.VITE_ADMIN_USER_EMAIL,
+  ALLOWED_USER_EMAIL: import.meta.env.VITE_ALLOWED_USER_EMAIL,
 } as const;
