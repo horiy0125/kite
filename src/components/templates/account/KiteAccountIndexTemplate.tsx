@@ -1,4 +1,6 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
+import { pageRoutes } from '../../../config/pageRoutes';
 import { useAccessControl } from '../../../hooks/accessControl';
 import { useAuth } from '../../../hooks/auth';
 import { mqExtraSmall } from '../../../styles/mixins';
@@ -34,46 +36,66 @@ export const KiteAccountIndexTemplate: React.FC = () => {
         <h1>アカウント情報</h1>
 
         {currentUser ? (
-          <article>
-            <header css={headerStyle}>
-              <hgroup>
-                <h2>{currentUser.name ? currentUser.name : currentUser.uid}</h2>
-                <h3>{isAdminUser ? '管理者' : 'ユーザー'}</h3>
-              </hgroup>
+          <>
+            <article>
+              <header css={headerStyle}>
+                <hgroup>
+                  <h2>
+                    {currentUser.name ? currentUser.name : currentUser.uid}
+                  </h2>
+                  <h3>{isAdminUser ? '管理者' : 'ユーザー'}</h3>
+                </hgroup>
 
-              <KiteBaseIcon
-                css={accountCircleIconStyle}
-                icon={<KiteAccountCircleIcon />}
-              />
-            </header>
+                <KiteBaseIcon
+                  css={accountCircleIconStyle}
+                  icon={<KiteAccountCircleIcon />}
+                />
+              </header>
 
-            <div className="grid">
-              <div>名前</div>
-              <div>{currentUser.name ? currentUser.name : '未設定'}</div>
-            </div>
-
-            <br />
-
-            <div className="grid">
-              <div>ニックネーム</div>
-              <div>
-                {currentUser.nickname ? currentUser.nickname : '未設定'}
+              <div className="grid">
+                <div>名前</div>
+                <div>{currentUser.name ? currentUser.name : '未設定'}</div>
               </div>
-            </div>
 
-            <br />
+              <br />
 
-            <div className="grid">
-              <div>メールアドレス</div>
-              <div>{currentUser.email}</div>
-            </div>
+              <div className="grid">
+                <div>ニックネーム</div>
+                <div>
+                  {currentUser.nickname ? currentUser.nickname : '未設定'}
+                </div>
+              </div>
 
-            <footer>
-              <button onClick={() => {}} className="secondary">
-                サインアウト
-              </button>
-            </footer>
-          </article>
+              <br />
+
+              <div className="grid">
+                <div>メールアドレス</div>
+                <div>{currentUser.email}</div>
+              </div>
+
+              <br />
+
+              <div className="grid">
+                <div>パスワード</div>
+                <div>
+                  <Link to={pageRoutes.account.changePassword}>
+                    パスワードの変更
+                  </Link>
+                </div>
+              </div>
+            </article>
+
+            <details>
+              <summary>登録情報の変更</summary>
+
+              <button onClick={() => {}}>プロフィールを変更する</button>
+              <button onClick={() => {}}>パスワードを変更する</button>
+            </details>
+
+            <button onClick={() => {}} className="secondary">
+              サインアウト
+            </button>
+          </>
         ) : null}
       </section>
     </KiteBaseTemplate>

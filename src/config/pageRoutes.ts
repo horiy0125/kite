@@ -5,5 +5,8 @@ export const pageRoutes = {
 
   account: {
     index: '/account',
+
+    edit: '/account/edit',
+    changePassword: '/account/change_password',
   },
 } as const;

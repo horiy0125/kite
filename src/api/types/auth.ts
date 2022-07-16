@@ -15,3 +15,14 @@ export type SignInApiResponse = {
     allow_password_change: boolean;
   };
 };
+
+export type AuthRequestHeaders = {
+  'access-token': string;
+  client: string;
+  uid: string;
+};
+
+export type ChangePasswordApiRequest = {
+  password: string;
+  password_confirmation: string;
+};

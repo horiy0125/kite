@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { KiteAccountChangePasswordTemplate } from './components/templates/account/KiteAccountChangePasswordTemplate';
 // import { KiteInformationModal } from './components/organisms/KiteInformationModal';
 // import { KiteConfirmModal } from './components/organisms/KiteConfirmModal';
 import { KiteAccountIndexTemplate } from './components/templates/account/KiteAccountIndexTemplate';
@@ -19,6 +20,10 @@ export const App: React.FC = () => {
           <Route
             path={pageRoutes.account.index}
             element={<KiteAccountIndexTemplate />}
+          />
+          <Route
+            path={pageRoutes.account.changePassword}
+            element={<KiteAccountChangePasswordTemplate />}
           />
         </Routes>
       </BrowserRouter>

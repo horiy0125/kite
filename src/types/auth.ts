@@ -7,4 +7,8 @@ export type CurrentUser = {
   nickname: null;
   image: null;
   allowPasswordChange: boolean;
+  accessToken: string;
+  cacheControl: string;
+  client: string;
+  expiry: string;
 };
