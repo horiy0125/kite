@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { changePasswordApiClient, signInApiClient } from '../api/clients/auth';
 import { AuthRequestHeaders } from '../api/types/auth';
 import { currentUserState } from '../recoil/atoms/auth';
+import { authRequestHeadersState } from '../recoil/selectors/auth';
 import { CurrentUser } from '../types/auth';
 import {
   CurrentPasswordWrongError,
@@ -13,6 +14,7 @@ import {
 
 export const useAuth = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const authRequestHeaders = useRecoilValue(authRequestHeadersState);
 
   const signIn = useCallback(
     async (email: string, password: string) => {
@@ -94,5 +96,5 @@ export const useAuth = () => {
     [currentUser],
   );
 
-  return { currentUser, signIn, changePassword };
+  return { currentUser, authRequestHeaders, signIn, changePassword };
 };

@@ -4,6 +4,7 @@ import { KiteAccountChangePasswordTemplate } from './components/templates/accoun
 // import { KiteInformationModal } from './components/organisms/KiteInformationModal';
 // import { KiteConfirmModal } from './components/organisms/KiteConfirmModal';
 import { KiteAccountIndexTemplate } from './components/templates/account/KiteAccountIndexTemplate';
+import { KiteBalanceIndexTemplate } from './components/templates/balance/KiteBalanceIndexTemplate';
 import { KiteIndexTemplate } from './components/templates/KiteIndexTemplate';
 import { KiteSigninTemplate } from './components/templates/KiteSigninTemplate';
 import { pageRoutes } from './config/pageRoutes';
@@ -24,6 +25,11 @@ export const App: React.FC = () => {
           <Route
             path={pageRoutes.account.changePassword}
             element={<KiteAccountChangePasswordTemplate />}
+          />
+
+          <Route
+            path={pageRoutes.balance.index}
+            element={<KiteBalanceIndexTemplate />}
           />
         </Routes>
       </BrowserRouter>
