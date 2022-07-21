@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getBalancesApiClient } from '../../../api/clients/balance';
 import { useAuth } from '../../../hooks/auth';
 import { KiteBaseTemplate } from '../base/KiteBaseTemplate';
@@ -10,21 +10,27 @@ export const KiteBalanceIndexTemplate: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const now = dayjs();
-  const [selectedYear, setSelectedYear] = useState(now.year());
-  const [selectedMonth, setSelectedMonth] = useState(now.month() + 1);
+  const [accrualMonth, setAccrualMonth] = useState(dayjs());
+
+  const selectedYear = useMemo(() => {
+    return accrualMonth.year();
+  }, [accrualMonth]);
+
+  const selectedMonth = useMemo(() => {
+    return accrualMonth.month() + 1;
+  }, [accrualMonth]);
 
   useEffect(() => {
     setLoading(true);
 
     if (authRequestHeaders) {
-      getBalancesApiClient(authRequestHeaders)
+      getBalancesApiClient(authRequestHeaders, selectedYear, selectedMonth)
         .then(console.log)
         .finally(() => {
           setLoading(false);
         });
     }
-  }, []);
+  }, [accrualMonth]);
 
   return (
     <KiteBaseTemplate>
@@ -37,10 +43,14 @@ export const KiteBalanceIndexTemplate: React.FC = () => {
           </h2>
 
           <div className="grid">
-            <button onClick={() => setSelectedMonth(selectedMonth - 1)}>
+            <button
+              onClick={() => setAccrualMonth(accrualMonth.add(-1, 'month'))}
+            >
               前月
             </button>
-            <button onClick={() => setSelectedMonth(selectedMonth + 1)}>
+            <button
+              onClick={() => setAccrualMonth(accrualMonth.add(1, 'month'))}
+            >
               来月
             </button>
           </div>
