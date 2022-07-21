@@ -1,6 +1,7 @@
 import { baseApiInstance } from '..';
 import { apiRoutes } from '../../config/apiRoutes';
 import type { AuthRequestHeaders } from '../types/auth';
+import { GetBalancesApiResponse } from '../types/balance';
 
 export const getBalancesApiClient = async (
   requestHeaders: AuthRequestHeaders,
@@ -14,7 +15,7 @@ export const getBalancesApiClient = async (
 
   const path = `${apiRoutes.v1.balance.balance}?${queryString}`;
 
-  const res = await baseApiInstance.get(path, {
+  const res = await baseApiInstance.get<GetBalancesApiResponse>(path, {
     headers: requestHeaders,
   });
 
