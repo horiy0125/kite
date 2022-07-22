@@ -53,7 +53,7 @@ export const KiteBalanceIndexTemplate: React.FC = () => {
         </div>
 
         <article aria-busy={loading}>
-          {balance ? (
+          {loading === false && balance ? (
             <>
               <header>
                 <h2>
@@ -61,13 +61,57 @@ export const KiteBalanceIndexTemplate: React.FC = () => {
                 </h2>
               </header>
 
-              <p>
-                残高: {balance.balance}円（前月より{balance.changes}円変動）
-                <br />
-                収入計: {balance.totalReceipts}円
-                <br />
-                支出計: {balance.totalExpenses}円
-              </p>
+              <h3>
+                残高: {balance.balance}円（+{balance.changes}円）
+              </h3>
+
+              <div className="grid">
+                <div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>日付</th>
+                        <th>タイトル</th>
+                        <th>金額</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {balance.expenses.map(expense => (
+                        <tr key={expense.id}>
+                          <td>{expense.accrualDate}</td>
+                          <td>{expense.title}</td>
+                          <td>{expense.amount}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  支出計: {balance.totalExpenses}円
+                </div>
+
+                <div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>日付</th>
+                        <th>タイトル</th>
+                        <th>金額</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {balance.receipts.map(receipt => (
+                        <tr key={receipt.id}>
+                          <td>{receipt.accrualDate}</td>
+                          <td>{receipt.title}</td>
+                          <td>{receipt.amount}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  収入計: {balance.totalReceipts}円
+                </div>
+              </div>
             </>
           ) : null}
         </article>

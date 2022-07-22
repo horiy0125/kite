@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { pageRoutes } from '../../../config/pageRoutes';
 import { useAccessControl } from '../../../hooks/accessControl';
-import { useAuth } from '../../../hooks/auth';
+import { useFirebaseAuth } from '../../../hooks/firebaseAuth';
 import { mqExtraSmall } from '../../../styles/mixins';
 import { KiteBaseIcon } from '../../atoms/base/KiteBaseIcon';
 import { KiteAccountCircleIcon } from '../../atoms/icons/KiteAccountCircleIcon';
@@ -15,7 +15,7 @@ const headerStyle = css`
   justify-content: space-between;
 `;
 
-const accountCircleIconStyle = css`
+const accountImageStyle = css`
   ${mqExtraSmall(`
     display: none
   `)}
@@ -25,8 +25,10 @@ const accountCircleIconStyle = css`
 `;
 
 export const KiteAccountIndexTemplate: React.FC = () => {
-  const auth = useAuth();
-  const { currentUser } = auth;
+  const [signingOut, setSigningOut] = useState(false);
+
+  const firebaseAuth = useFirebaseAuth();
+  const { user, signOutAndClearStates } = firebaseAuth;
 
   const accessControl = useAccessControl();
   const { isAdminUser, isAllowedUser } = accessControl;
@@ -43,74 +45,83 @@ export const KiteAccountIndexTemplate: React.FC = () => {
     return 'ゲストアカウント';
   }, [isAdminUser, isAllowedUser]);
 
+  const onClickSignOut = useCallback(async () => {
+    setSigningOut(true);
+
+    await signOutAndClearStates()
+      .catch(() => {})
+      .finally(() => {
+        setSigningOut(false);
+      });
+  }, [signOutAndClearStates]);
+
   return (
     <KiteBaseTemplate>
       <section>
         <h1>プロフィール</h1>
 
-        {currentUser ? (
+        {user ? (
           <>
             <article>
               <header css={headerStyle}>
                 <hgroup>
-                  <h2>
-                    {currentUser.name ? currentUser.name : currentUser.uid}
-                  </h2>
+                  <h2>{user.displayName ? user.displayName : user.email}</h2>
                   <h3>{accountType}</h3>
                 </hgroup>
 
-                <KiteBaseIcon
-                  css={accountCircleIconStyle}
-                  icon={<KiteAccountCircleIcon />}
-                />
+                {user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="プロフィール画像"
+                    css={[accountImageStyle, `border-radius: 50%;`]}
+                  />
+                ) : (
+                  <KiteBaseIcon
+                    css={accountImageStyle}
+                    icon={<KiteAccountCircleIcon />}
+                  />
+                )}
               </header>
 
               <div className="grid">
                 <div>名前</div>
-                <div>{currentUser.name ? currentUser.name : '未設定'}</div>
-              </div>
-
-              <br />
-
-              <div className="grid">
-                <div>ニックネーム</div>
-                <div>
-                  {currentUser.nickname ? currentUser.nickname : '未設定'}
-                </div>
+                <div>{user.displayName ? user.displayName : '未設定'}</div>
               </div>
 
               <br />
 
               <div className="grid">
                 <div>メールアドレス</div>
-                <div>{currentUser.email}</div>
+                <div>{user.email}</div>
               </div>
 
               <br />
 
               <div className="grid">
-                <div>パスワード</div>
-                <div>
-                  <Link to={pageRoutes.account.changePassword}>
-                    パスワードを変更する
-                  </Link>
-                </div>
+                <div>電話番号</div>
+                <div>{user.phoneNumber ? user.phoneNumber : '未設定'}</div>
               </div>
 
               <br />
 
               <div className="grid">
-                <Link
-                  to={pageRoutes.account.edit}
-                  role="button"
-                  className="outline"
-                >
-                  プロフィールを変更する
-                </Link>
+                <div>初回ログイン日時</div>
+                <div>{user.metadata.creationTime}</div>
+              </div>
+
+              <br />
+
+              <div className="grid">
+                <div>最終ログイン日時</div>
+                <div>{user.metadata.lastSignInTime}</div>
               </div>
             </article>
 
-            <button onClick={() => {}} className="secondary">
+            <button
+              onClick={signOutAndClearStates}
+              className="secondary"
+              aria-busy={signingOut}
+            >
               サインアウト
             </button>
           </>

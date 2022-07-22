@@ -1,59 +1,30 @@
 import { useCallback, useState } from 'react';
-import { useAuth } from '../../hooks/auth';
+import { useFirebaseAuth } from '../../hooks/firebaseAuth';
 import { KiteBaseTemplate } from './base/KiteBaseTemplate';
 
 export const KiteSigninTemplate: React.FC = () => {
-  const auth = useAuth();
-  const { signIn } = auth;
+  const [loggingIn, setLoggingIn] = useState(false);
 
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const firebaseAuth = useFirebaseAuth();
+  const { signIn } = firebaseAuth;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const onClickLogin = useCallback(async () => {
+    setLoggingIn(true);
 
-  const onClickSignIn = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault();
-
-      setIsLoggingIn(true);
-      await signIn(email, password)
-        .then(() => {})
-        .catch(error => {
-          console.error(error);
-        })
-        .finally(() => {
-          setIsLoggingIn(false);
-        });
-    },
-    [email, password],
-  );
+    await signIn()
+      .catch(() => {})
+      .finally(() => {
+        setLoggingIn(false);
+      });
+  }, [signIn]);
 
   return (
     <KiteBaseTemplate>
       <section>
-        <h1>Kite にサインイン</h1>
-
-        <form>
-          <label>
-            メールアドレス
-            <input type="email" onChange={e => setEmail(e.target.value)} />
-          </label>
-          <label>
-            パスワード
-            <input
-              type="password"
-              onChange={e => setPassword(e.target.value)}
-            />
-          </label>
-
-          <button
-            type="submit"
-            onClick={e => onClickSignIn(e)}
-            aria-busy={isLoggingIn}
-          >
-            サインイン
-          </button>
-        </form>
+        <h1>Kite へようこそ</h1>
+        <button onClick={onClickLogin} aria-busy={loggingIn}>
+          Google アカウントでログイン
+        </button>
       </section>
     </KiteBaseTemplate>
   );
